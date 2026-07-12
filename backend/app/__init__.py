@@ -1,0 +1,1 @@
+"""FutureLens FastAPI Application Package."""

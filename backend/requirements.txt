@@ -1,0 +1,37 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic==2.7.4
+pydantic-settings==2.3.4
+
+# Database
+sqlalchemy==2.0.31
+alembic==1.13.2
+psycopg2-binary==2.9.12
+asyncpg==0.31.0
+aiosqlite==0.20.0
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+
+# Financial Analytics
+numpy==2.5.1
+pandas==3.0.2
+scipy==1.16.2
+scikit-learn==1.7.2
+
+# OR-Tools
+ortools==9.15.6755
+
+# AI / LLM
+openai==1.35.7
+httpx==0.27.0
+
+# Utilities
+python-dotenv==1.0.1
+structlog==24.2.0
+
+# Visualization (backend charts if needed)
+matplotlib==3.10.5
+plotly==5.22.0

@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+numpy
+pandas
+scipy
+scikit-learn
+ortools
+pydantic
+sqlalchemy
+psycopg2-binary
+python-jose
+passlib
+python-multipart
+plotly
+matplotlib
+numba
