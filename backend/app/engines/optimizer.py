@@ -105,20 +105,23 @@ class OptimizationEngine:
             })
             return 1.0 - prob  # minimize
 
-        bounds = [(min_sip, effective_max_sip)]
-
-        opt_result = differential_evolution(
-            objective,
-            bounds=bounds,
-            seed=42,
-            maxiter=50,
-            tol=0.001,
-            workers=1,
-            updating="deferred",
-            popsize=10,
-        )
-
-        optimal_sip = float(opt_result.x[0])
+        if effective_max_sip <= min_sip:
+            # Impossible to optimize if surplus is lower than min_sip
+            optimal_sip = effective_max_sip
+            optimization_path = [{"sip": optimal_sip, "probability": current_prob}]
+        else:
+            bounds = [(min_sip, effective_max_sip)]
+            opt_result = differential_evolution(
+                objective,
+                bounds=bounds,
+                seed=42,
+                maxiter=50,
+                tol=0.001,
+                workers=1,
+                updating="deferred",
+                popsize=10,
+            )
+            optimal_sip = float(opt_result.x[0])
 
         # ── Final validation with full simulation ─────────────────────────────
         final_engine = MonteCarloEngine(

@@ -5,6 +5,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import NetWorthChart from "@/components/charts/NetWorthChart";
 import GoalCard from "@/components/goals/GoalCard";
 import HealthScoreRing from "@/components/dashboard/HealthScoreRing";
+import AssumptionsPanel from "@/components/dashboard/AssumptionsPanel";
 import { dashboardApi, getApiError } from "@/lib/api";
 import { useAuth, useStore } from "@/lib/store";
 import { formatINR, formatPct, probabilityColor } from "@/lib/utils";
@@ -184,6 +185,8 @@ export default function DashboardPage() {
                 </Link>
               ))}
             </div>
+            
+            <AssumptionsPanel />
           </>
         )}
       </div>

@@ -140,9 +140,8 @@ class MonteCarloEngine:
         # ── Success probability ───────────────────────────────────────────────
         success_prob = 0.0
         if target_amount and target_amount > 0:
-            # Inflation-adjust target to future value
-            real_target = target_amount * (1 + self.inflation_rate) ** self.horizon_years
-            success_prob = float(np.mean(final_wealth >= real_target))
+            # Treat target_amount as the nominal future target
+            success_prob = float(np.mean(final_wealth >= target_amount))
         else:
             # No explicit target — use "positive real wealth growth" as success
             min_acceptable = self.initial_wealth * (1 + self.inflation_rate) ** self.horizon_years
@@ -218,24 +217,28 @@ class MonteCarloEngine:
         if not target_amount or target_amount <= 0:
             return 0.0
 
-        real_target = target_amount * (1 + self.inflation_rate) ** self.horizon_years
         M = self.num_months
 
         # Use P20 return path (conservative scenario matching ~80th percentile need)
         # Conservative monthly return
         conservative_return = (self.annual_mean - 1.28 * self.annual_vol) / 12
 
-        def simulate_final_wealth(sip: float) -> float:
+        annual_sip_growth = self.salary_growth_rate * 0.5
+
+        def simulate_final_wealth(base_sip: float) -> float:
             wealth = self.initial_wealth
-            for _ in range(M):
-                wealth = wealth * (1 + conservative_return) + sip
+            current_sip = base_sip
+            for month in range(M):
+                if month > 0 and month % 12 == 0:
+                    current_sip *= (1 + annual_sip_growth)
+                wealth = wealth * (1 + conservative_return) + current_sip
             return wealth
 
         # Binary search
-        low, high = 0.0, real_target / M
+        low, high = 0.0, target_amount / M
         for _ in range(max_iterations):
             mid = (low + high) / 2
-            if simulate_final_wealth(mid) >= real_target:
+            if simulate_final_wealth(mid) >= target_amount:
                 high = mid
             else:
                 low = mid
