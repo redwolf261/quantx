@@ -28,7 +28,7 @@ SCENARIO_LABELS = {
     "market_crash": "Market Crash (-20% Shock)",
     "inflation_spike": "Inflation Spike (+5% for 3 years)",
     "salary_loss": "Job Loss (50% income cut, 2 years)",
-    "medical_emergency": "Medical Emergency (₹15L one-time)",
+    "medical_emergency": "Medical Emergency (INR 15L one-time)",
 }
 
 

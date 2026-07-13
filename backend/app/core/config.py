@@ -54,6 +54,9 @@ class Settings(BaseSettings):
     HYBRID_MEAN_RETURN: float = 0.10
     HYBRID_VOLATILITY: float = 0.12
 
+    # Tax
+    EFFECTIVE_TAX_RATE: float = 0.20  # 20% effective tax rate assumption for net income calculation
+
 
 @lru_cache()
 def get_settings() -> Settings:

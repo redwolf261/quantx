@@ -25,7 +25,7 @@ SYSTEM_PROMPT = """You are FutureLens Financial Advisor — an AI that explains 
 CRITICAL RULES:
 - You do NOT calculate anything. All numbers are pre-computed by the analytics engine.
 - You only explain the provided structured data in clear, empathetic language.
-- Use Indian financial context (₹ currency, SIP, EMI, lakh/crore notation).
+- Use Indian financial context (INR currency, SIP, EMI, lakh/crore notation).
 - Be specific: always reference the exact numbers from the data.
 - Keep explanations under 200 words.
 - Format: One paragraph summary, then 2-3 key insights, then 2-3 action items.
@@ -36,17 +36,17 @@ EXPLANATION_TEMPLATES = {
 
 Your {goal_name} goal has a **{success_probability:.0%} probability** of success over {horizon_years} years.
 
-With your current monthly SIP of ₹{monthly_sip:,.0f}, your portfolio is projected to reach ₹{median_corpus:,.0f} (median scenario). In the best case (P90), it could reach ₹{p90_corpus:,.0f}; in the worst case (P10), ₹{p10_corpus:,.0f}.
+With your current monthly SIP of INR {monthly_sip:,.0f}, your portfolio is projected to reach INR {median_corpus:,.0f} (median scenario). In the best case (P90), it could reach INR {p90_corpus:,.0f}; in the worst case (P10), INR {p10_corpus:,.0f}.
 
-To achieve an 80% success probability, a monthly SIP of ₹{required_monthly_sip:,.0f} is recommended.""",
+To achieve an 80% success probability, a monthly SIP of INR {required_monthly_sip:,.0f} is recommended.""",
 
     "optimization": """Our optimization engine analyzed {optimization_iters} scenarios to maximize your goal probability.
 
-**Current plan**: {current_probability:.0%} success probability with ₹{current_sip:,.0f}/month SIP.
+**Current plan**: {current_probability:.0%} success probability with INR {current_sip:,.0f}/month SIP.
 
 **Optimized plan**: {optimized_probability:.0%} success probability — an improvement of {improvement_pct:.0f} percentage points.
 
-The recommended SIP increase is ₹{sip_increase:,.0f}/month, bringing your total to ₹{recommended_sip:,.0f}/month. This represents {savings_rate:.1%} of your monthly income.""",
+The recommended SIP increase is INR {sip_increase:,.0f}/month, bringing your total to INR {recommended_sip:,.0f}/month. This represents {savings_rate:.1%} of your monthly income.""",
 
     "stress_test": """We tested your financial plan against {scenario_count} stress scenarios.
 
@@ -56,16 +56,16 @@ Most impactful risk: **{worst_scenario}** reduces your success probability by {w
 
 Your plan shows {resilience_level} resilience to financial shocks.""",
 
-    "goal_status": """Your {goal_name} goal (target: ₹{target_amount:,.0f} by {target_year}) currently has a **{success_probability:.0%}** probability of success.
+    "goal_status": """Your {goal_name} goal (target: INR {target_amount:,.0f} by {target_year}) currently has a **{success_probability:.0%}** probability of success.
 
-You are currently investing ₹{monthly_sip:,.0f}/month. The required SIP for this goal is ₹{required_sip:,.0f}/month.
+You are currently investing INR {monthly_sip:,.0f}/month. The required SIP for this goal is INR {required_sip:,.0f}/month.
 
 {status_message}""",
 }
 
 STATUS_MESSAGES = {
     "on_track": "🟢 You are on track! Keep up the consistent SIP contributions.",
-    "slightly_off": "🟡 Minor adjustment needed. Consider increasing your SIP by ₹{gap:,.0f}/month.",
+    "slightly_off": "🟡 Minor adjustment needed. Consider increasing your SIP by INR {gap:,.0f}/month.",
     "at_risk": "🔴 This goal is at risk. Immediate action recommended — increase SIP or extend timeline.",
 }
 
@@ -202,12 +202,12 @@ Remember: You are ONLY explaining these pre-computed numbers. Do not perform any
                 prob = data.get("success_probability", 0)
                 insights = [
                     f"Your success probability is {prob:.0%} — {'strong' if prob >= 0.75 else 'moderate' if prob >= 0.5 else 'needs improvement'}",
-                    f"Median portfolio value: ₹{data.get('median_corpus', 0):,.0f}",
-                    f"Range: ₹{data.get('p10_corpus', 0):,.0f} (worst) to ₹{data.get('p90_corpus', 0):,.0f} (best)",
+                    f"Median portfolio value: INR {data.get('median_corpus', 0):,.0f}",
+                    f"Range: INR {data.get('p10_corpus', 0):,.0f} (worst) to INR {data.get('p90_corpus', 0):,.0f} (best)",
                 ]
                 actions = [
-                    f"Maintain consistent SIP of ₹{data.get('parameters', {}).get('monthly_sip', 0):,.0f}/month",
-                    f"Consider increasing SIP to ₹{data.get('required_monthly_sip', 0):,.0f} for 80% confidence",
+                    f"Maintain consistent SIP of INR {data.get('parameters', {}).get('monthly_sip', 0):,.0f}/month",
+                    f"Consider increasing SIP to INR {data.get('required_monthly_sip', 0):,.0f} for 80% confidence",
                     "Review asset allocation annually to stay aligned with risk profile",
                 ]
 
@@ -226,12 +226,12 @@ Remember: You are ONLY explaining these pre-computed numbers. Do not perform any
                     savings_rate=data.get("recommended_savings_rate", 0),
                 )
                 insights = [
-                    f"Increasing SIP by ₹{data.get('sip_increase', 0):,.0f}/month lifts success by {improvement:.0f}%",
+                    f"Increasing SIP by INR {data.get('sip_increase', 0):,.0f}/month lifts success by {improvement:.0f}%",
                     f"Optimized probability: {opt_prob:.0%} vs current {curr_prob:.0%}",
                     f"Recommended savings rate: {data.get('recommended_savings_rate', 0):.1%} of income",
                 ]
                 actions = [
-                    f"Increase monthly SIP to ₹{data.get('recommended_sip', 0):,.0f}",
+                    f"Increase monthly SIP to INR {data.get('recommended_sip', 0):,.0f}",
                     "Set up automatic SIP step-up of 10% annually",
                     "Review and eliminate unnecessary recurring expenses",
                 ]
