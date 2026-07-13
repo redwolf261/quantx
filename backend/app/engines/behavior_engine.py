@@ -72,6 +72,36 @@ class BehaviorEngine:
             "alerts":   self._generate_alerts(scores),
         }
 
+    def get_regime_drag(self, regime_name: str, score: float) -> tuple[float, float]:
+        """
+        Determines how irrational behavior affects the simulation based on their overall behavior score.
+        Returns (return_drag, sip_multiplier).
+        A disciplined investor (score > 80) doesn't panic. 
+        A poor behavioral score leads to selling at the bottom (return drag) or stopping SIPs.
+        """
+        if score >= 80:
+            return (0.0, 1.0) # Disciplined
+            
+        if regime_name == "bear":
+            if score < 40:
+                return (-0.05, 0.0) # Panic seller: locks in 5% extra loss, stops SIP
+            elif score < 60:
+                return (-0.02, 0.5) # Stops half of SIP
+            else:
+                return (0.0, 0.8)
+                
+        if regime_name == "recession":
+            if score < 50:
+                return (0.0, 0.0) # Complete SIP pause due to cash flow stress
+            else:
+                return (0.0, 0.5) # Halves SIP
+                
+        if regime_name == "high_inflation":
+            if score < 50:
+                return (-0.02, 1.0) # Chases bad yield, loses 2%
+                
+        return (0.0, 1.0)
+
     # ── Dimension Computations ─────────────────────────────────────────────────
 
     def _savings_discipline(self) -> float:

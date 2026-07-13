@@ -43,6 +43,7 @@ class MonteCarloEngine:
         inflation_rate: float = 0.06,
         num_simulations: int = 10000,
         seed: Optional[int] = None,
+        behavior_score: float = 85.0,
     ):
         self.initial_wealth = max(0.0, initial_wealth)
         self.monthly_sip = max(0.0, monthly_sip)
@@ -54,6 +55,7 @@ class MonteCarloEngine:
         self.num_simulations = num_simulations
         self.salary_growth_rate = salary_growth_rate
         self.inflation_rate = inflation_rate
+        self.behavior_score = behavior_score
         self.rng = np.random.default_rng(seed or settings.MONTE_CARLO_SEED)
 
         # Compute blended return parameters
@@ -108,23 +110,97 @@ class MonteCarloEngine:
         """
         N = self.num_simulations
         M = self.num_months
+        
+        # ── Setup Dynamic Economic Regimes ────────────────────────────────────
+        from app.market.economic_regimes import EconomicCycleEngine, EconomicRegime
+        cycle_engine = EconomicCycleEngine()
+        
+        # Generate regime path for all simulations (shape: horizon_years, num_simulations)
+        regime_path = cycle_engine.generate_regime_path(self.horizon_years, num_simulations=N)
+        
+        # Behavior Engine
+        from app.engines.behavior_engine import BehaviorEngine
+        # We instantiate a dummy profile-like object if needed, or we just use a static method.
+        # Since get_regime_drag doesn't need profile data (just score), we can call it.
+        # But for safety, we'll instantiate a dummy BehaviorEngine.
+        
+        # Map regimes to annual characteristics
+        annual_means = np.zeros((N, self.horizon_years))
+        annual_vols = np.zeros((N, self.horizon_years))
+        
+        # Array to hold SIP multipliers (shape: N, M)
+        sip_multipliers = np.ones((N, M))
+        
+        # For risk profile adjustments
+        risk_adj_mean = {"conservative": -0.02, "moderate": 0.0, "aggressive": 0.02}.get(self.risk_profile, 0.0)
+        risk_adj_vol = {"conservative": -0.02, "moderate": 0.0, "aggressive": 0.03}.get(self.risk_profile, 0.0)
+        
+        # Dummy profile for behavior engine instance
+        class DummyProfile:
+            monthly_income=1; monthly_expenses=0; monthly_emi=0; total_savings=0; total_investments=0; equity_allocation=0; total_loans=0; age=30; salary_growth_rate=0; inflation_rate=0
+        
+        b_engine = BehaviorEngine(DummyProfile())
+        
+        for yr in range(self.horizon_years):
+            for i, state in enumerate(cycle_engine.states):
+                # Mask for simulations in this state at this year
+                mask = (regime_path[yr, :] == i)
+                char = cycle_engine.get_characteristics(state)
+                
+                # Apply behavior drag based on regime
+                ret_drag, sip_mult = b_engine.get_regime_drag(state.value, self.behavior_score)
+                
+                eq_mean = char.equity_mean + risk_adj_mean + ret_drag
+                eq_vol = char.equity_vol + risk_adj_vol
+                db_mean = char.debt_mean
+                db_vol = char.debt_vol
+                
+                # Blended portfolio parameters
+                port_mean = self.equity_allocation * eq_mean + self.debt_allocation * db_mean
+                port_vol = np.sqrt(
+                    (self.equity_allocation * eq_vol)**2 +
+                    (self.debt_allocation * db_vol)**2 +
+                    2 * 0.2 * self.equity_allocation * self.debt_allocation * eq_vol * db_vol
+                )
+                
+                annual_means[mask, yr] = port_mean
+                annual_vols[mask, yr] = port_vol
+                
+                # Apply SIP multipliers for the 12 months of this year
+                start_m = yr * 12
+                end_m = start_m + 12
+                sip_multipliers[mask, start_m:end_m] = sip_mult
+
+        # Convert annual parameters to monthly log-normal parameters
+        monthly_means = annual_means / 12.0
+        monthly_vols = annual_vols / np.sqrt(12)
+        
+        lognorm_mu = np.log(1 + monthly_means) - 0.5 * monthly_vols**2
+        lognorm_sigma = monthly_vols
+        
+        # Expand yearly parameters to monthly (shape: N, M)
+        mu_expanded = np.repeat(lognorm_mu, 12, axis=1)
+        sigma_expanded = np.repeat(lognorm_sigma, 12, axis=1)
 
         # ── Generate random returns matrix: shape (N, M) ──────────────────────
-        # Using log-normal to ensure returns > -100%
         log_returns = self.rng.normal(
-            loc=self.lognorm_mu,
-            scale=self.lognorm_sigma,
+            loc=mu_expanded,
+            scale=sigma_expanded,
             size=(N, M),
         )
         monthly_returns = np.exp(log_returns)  # shape (N, M)
 
         # ── SIP growth (inflation-adjusted over time) ─────────────────────────
         # SIP increases annually with salary growth
-        sip_schedule = np.ones(M) * self.monthly_sip
+        base_sip_schedule = np.ones(M) * self.monthly_sip
         annual_sip_growth = self.salary_growth_rate * 0.5  # SIP grows at half salary growth
         for yr in range(1, self.horizon_years):
             start_month = yr * 12
-            sip_schedule[start_month:] *= (1 + annual_sip_growth)
+            base_sip_schedule[start_month:] *= (1 + annual_sip_growth)
+            
+        # Apply behavioral multipliers to SIP schedule per simulation
+        # sip_schedule shape will be (N, M)
+        sip_schedule = base_sip_schedule * sip_multipliers
 
         # ── Simulate wealth paths ─────────────────────────────────────────────
         # W(t+1) = W(t) * (1 + r_t) + SIP(t)
@@ -132,7 +208,10 @@ class MonteCarloEngine:
         wealth[:, 0] = self.initial_wealth
 
         for t in range(M):
-            wealth[:, t + 1] = wealth[:, t] * monthly_returns[:, t] + sip_schedule[t]
+            # wealth[:, t] is shape (N,)
+            # monthly_returns[:, t] is shape (N,)
+            # sip_schedule[:, t] is shape (N,)
+            wealth[:, t + 1] = wealth[:, t] * monthly_returns[:, t] + sip_schedule[:, t]
 
         # Final wealth (last column)
         final_wealth = wealth[:, -1]  # shape (N,)
