@@ -6,7 +6,7 @@
 [build.environment]
   NEXT_PRIVATE_TARGET = "server"
   # This will be replaced with the actual Render backend URL in the Netlify UI later
-  NEXT_PUBLIC_API_URL = "https://futurelens-backend.onrender.com"
+  NEXT_PUBLIC_API_URL = "https://futurelens-xdwz.onrender.com"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
