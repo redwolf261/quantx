@@ -57,7 +57,8 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && typeof window !== "undefined") {
       localStorage.removeItem("fl_token");
       localStorage.removeItem("fl_user");
-      window.location.href = "/login";
+      localStorage.removeItem("futurelens-store"); // Clear Zustand state
+      window.location.href = "/";
     }
     return Promise.reject(error);
   }
