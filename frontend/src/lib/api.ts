@@ -36,7 +36,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
-  timeout: 60000, // 60s for long simulations
+  timeout: 120000, // 120s to account for Render free tier cold starts
 });
 
 // ── Request interceptor: attach JWT ─────────────────────────────────────────
