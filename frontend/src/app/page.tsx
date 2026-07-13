@@ -60,10 +60,10 @@ export default function Home() {
           {/* Feature cards */}
           <div className="space-y-3">
             {[
-              { icon: "🎯", title: "Goal-Based Planning", desc: "Retirement, home, education — all in one view" },
-              { icon: "📊", title: "Monte Carlo Simulation", desc: "10,000 simulations → your success probability" },
-              { icon: "🛡️", title: "Stress Testing", desc: "Know how market crashes affect your goals" },
-              { icon: "🤖", title: "AI Explanations", desc: "Plain-language insights from complex analytics" },
+              { title: "Goal-Based Planning", desc: "Retirement, home, education — all in one view" },
+              { title: "Monte Carlo Simulation", desc: "10,000 simulations → your success probability" },
+              { title: "Stress Testing", desc: "Know how market crashes affect your goals" },
+              { title: "AI Explanations", desc: "Plain-language insights from complex analytics" },
             ].map((f) => (
               <motion.div
                 key={f.title}
@@ -72,7 +72,6 @@ export default function Home() {
                 transition={{ delay: 0.3 }}
                 className="flex items-center gap-3 glass-card px-4 py-3"
               >
-                <span className="text-xl">{f.icon}</span>
                 <div>
                   <p className="text-sm font-semibold text-white">{f.title}</p>
                   <p className="text-xs text-slate-400">{f.desc}</p>
@@ -81,12 +80,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Badge */}
-          <div className="mt-8">
-            <span className="badge-teal px-3 py-1.5 text-xs rounded-full">
-              🏆 IDBI Innovate 2026 · Digital Wealth Management Track
-            </span>
-          </div>
         </motion.div>
       </div>
 

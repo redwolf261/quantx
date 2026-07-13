@@ -74,7 +74,10 @@ export default function LoginForm() {
       <div className="flex items-center gap-3 mb-8 lg:hidden">
         <div className="w-10 h-10 rounded-xl flex items-center justify-center"
           style={{ background: "linear-gradient(135deg, #0f766e, #f97316)" }}>
-          <span className="text-white text-lg">🔭</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.93 4.93l2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12" />
+          </svg>
         </div>
         <div>
           <h1 className="text-xl font-bold text-white">FutureLens</h1>
@@ -197,20 +200,7 @@ export default function LoginForm() {
             )}
           </button>
         </form>
-
-        {/* Demo credentials hint */}
-        {mode === "login" && (
-          <div className="mt-4 px-3 py-2 rounded-lg text-xs text-slate-500 border border-white/05"
-            style={{ background: "rgba(255,255,255,0.02)" }}>
-            <strong className="text-slate-400">Demo:</strong> Use any synthetic customer email
-            from the seeded data. Password: <code className="text-teal-400">FutureLens@2026</code>
-          </div>
-        )}
       </div>
-
-      <p className="text-center text-xs text-slate-500 mt-4">
-        IDBI Innovate 2026 · Digital Wealth Management Track
-      </p>
     </motion.div>
   );
 }
