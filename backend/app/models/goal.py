@@ -2,6 +2,7 @@
 import uuid
 import enum
 from datetime import datetime, timezone
+from typing import Optional
 from sqlalchemy import String, Integer, Numeric, DateTime, ForeignKey, Text, Enum as SAEnum, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -37,11 +38,11 @@ class Goal(Base):
     importance_score: Mapped[float] = mapped_column(Numeric(5, 2), default=5.0)
 
     # Computed / cached
-    required_monthly_sip: Mapped[float | None] = mapped_column(Numeric(15, 2))
-    current_success_probability: Mapped[float | None] = mapped_column(Numeric(5, 4))
+    required_monthly_sip: Mapped[Optional[float]] = mapped_column(Numeric(15, 2), nullable=True)
+    current_success_probability: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
 
     status: Mapped[GoalStatus] = mapped_column(SAEnum(GoalStatus), default=GoalStatus.active)
-    notes: Mapped[str | None] = mapped_column(Text)
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

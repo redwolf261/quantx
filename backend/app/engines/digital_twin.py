@@ -108,6 +108,7 @@ class DigitalTwinEngine:
         """
         Run deterministic monthly simulation over horizon_years.
         Returns list of MonthlySnapshot for each month.
+        Includes loan amortization (principal reduces over time with EMI).
         """
         if equity_return is None:
             equity_return = settings.EQUITY_MEAN_RETURN
@@ -128,6 +129,25 @@ class DigitalTwinEngine:
         income = self.monthly_income
         expenses = self.monthly_expenses
         emi = self.monthly_emi
+
+        # Loan amortization: estimate remaining loan tenure from EMI
+        # Using standard loan amortization: EMI = P * r * (1+r)^n / ((1+r)^n - 1)
+        # We solve for n (months) given EMI, principal, and assumed interest rate
+        loan_principal = self.total_loans
+        if loan_principal > 0 and emi > 0:
+            annual_loan_rate = 0.09  # Assume 9% p.a. for unsecured/personal loans
+            monthly_loan_rate = annual_loan_rate / 12
+            # Estimate remaining months: n = log(EMI / (EMI - P*r)) / log(1+r)
+            if emi > loan_principal * monthly_loan_rate:
+                import math
+                remaining_months = math.ceil(
+                    math.log(emi / (emi - loan_principal * monthly_loan_rate))
+                    / math.log(1 + monthly_loan_rate)
+                )
+            else:
+                remaining_months = horizon_years * 12  # EMI too low, won't fully amortize
+        else:
+            remaining_months = 0
 
         for month in range(1, horizon_years * 12 + 1):
             # Salary growth (annual)
@@ -151,7 +171,16 @@ class DigitalTwinEngine:
             portfolio_value = portfolio_value * (1 + monthly_return) + actual_sip
             cumulative_invested += actual_sip
 
-            net_worth = portfolio_value - self.total_loans  # simplified (loans reduce over time in reality)
+            # Loan amortization: reduce principal each month
+            if loan_principal > 0 and emi > 0 and remaining_months > 0:
+                monthly_loan_rate = 0.09 / 12  # 9% p.a.
+                interest_component = loan_principal * monthly_loan_rate
+                principal_component = emi - interest_component
+                if principal_component > 0:
+                    loan_principal = max(0, loan_principal - principal_component)
+                remaining_months -= 1
+
+            net_worth = portfolio_value - loan_principal
 
             snapshots.append(MonthlySnapshot(
                 month=month,

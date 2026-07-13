@@ -2,7 +2,8 @@
 import uuid
 import enum
 from datetime import datetime, date, timezone
-from sqlalchemy import String, Integer, Numeric, DateTime, Date, ForeignKey, Text, ARRAY, Enum as SAEnum, UUID, JSON
+from typing import Optional
+from sqlalchemy import String, Integer, Numeric, DateTime, Date, ForeignKey, Text, Enum as SAEnum, UUID, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
@@ -17,7 +18,7 @@ class Transaction(Base):
     transaction_date: Mapped[date] = mapped_column(Date, nullable=False, index=True)
     category: Mapped[str] = mapped_column(String(100), nullable=False)
     amount: Mapped[float] = mapped_column(Numeric(15, 2), nullable=False)
-    description: Mapped[str | None] = mapped_column(String(500))
+    description: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     user = relationship("User", back_populates="transactions")
@@ -29,20 +30,20 @@ class SimulationResult(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    goal_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("goals.id", ondelete="SET NULL"), index=True)
+    goal_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("goals.id", ondelete="SET NULL"), index=True, nullable=True)
 
     simulation_type: Mapped[str] = mapped_column(String(50), default="monte_carlo")
     num_simulations: Mapped[int] = mapped_column(Integer, default=10000)
     horizon_years: Mapped[int] = mapped_column(Integer, nullable=False)
 
-    success_probability: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    median_corpus: Mapped[float | None] = mapped_column(Numeric(20, 2))
-    p10_corpus: Mapped[float | None] = mapped_column(Numeric(20, 2))
-    p90_corpus: Mapped[float | None] = mapped_column(Numeric(20, 2))
-    failure_probability: Mapped[float | None] = mapped_column(Numeric(5, 4))
+    success_probability: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    median_corpus: Mapped[Optional[float]] = mapped_column(Numeric(20, 2), nullable=True)
+    p10_corpus: Mapped[Optional[float]] = mapped_column(Numeric(20, 2), nullable=True)
+    p90_corpus: Mapped[Optional[float]] = mapped_column(Numeric(20, 2), nullable=True)
+    failure_probability: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
 
-    result_data: Mapped[dict | None] = mapped_column(JSON)
-    parameters: Mapped[dict | None] = mapped_column(JSON)
+    result_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+    parameters: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
 
     computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
@@ -56,18 +57,18 @@ class Recommendation(Base):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    goal_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("goals.id", ondelete="SET NULL"))
+    goal_id: Mapped[Optional[uuid.UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey("goals.id", ondelete="SET NULL"), index=True, nullable=True)
 
     recommendation_type: Mapped[str] = mapped_column(String(100), nullable=False)
-    current_probability: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    optimized_probability: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    recommended_sip: Mapped[float | None] = mapped_column(Numeric(15, 2))
-    recommended_savings_rate: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    recommended_retirement_age: Mapped[int | None] = mapped_column(Integer)
+    current_probability: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    optimized_probability: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    recommended_sip: Mapped[Optional[float]] = mapped_column(Numeric(15, 2), nullable=True)
+    recommended_savings_rate: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    recommended_retirement_age: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
-    explanation_text: Mapped[str | None] = mapped_column(Text)
-    explanation_model: Mapped[str | None] = mapped_column(String(100))
-    optimization_data: Mapped[dict | None] = mapped_column(JSON)
+    explanation_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    explanation_model: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    optimization_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
@@ -91,17 +92,17 @@ class RiskReport(Base):
     user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
 
     scenario_type: Mapped[ScenarioType] = mapped_column(SAEnum(ScenarioType), nullable=False)
-    scenario_params: Mapped[dict | None] = mapped_column(JSON)
+    scenario_params: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
 
-    base_success_prob: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    stressed_success_prob: Mapped[float | None] = mapped_column(Numeric(5, 4))
-    probability_impact: Mapped[float | None] = mapped_column(Numeric(5, 4))
+    base_success_prob: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    stressed_success_prob: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
+    probability_impact: Mapped[Optional[float]] = mapped_column(Numeric(5, 4), nullable=True)
 
-    base_median_corpus: Mapped[float | None] = mapped_column(Numeric(20, 2))
-    stressed_median_corpus: Mapped[float | None] = mapped_column(Numeric(20, 2))
+    base_median_corpus: Mapped[Optional[float]] = mapped_column(Numeric(20, 2), nullable=True)
+    stressed_median_corpus: Mapped[Optional[float]] = mapped_column(Numeric(20, 2), nullable=True)
 
-    risk_level: Mapped[str | None] = mapped_column(String(20))
-    result_data: Mapped[dict | None] = mapped_column(JSON)
+    risk_level: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    result_data: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
     computed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     user = relationship("User", back_populates="risk_reports")

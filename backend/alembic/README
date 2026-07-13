@@ -1,0 +1,18 @@
+# FutureLens Database Migrations
+
+This directory contains Alembic database migrations for FutureLens.
+
+## Commands
+
+```bash
+# Create a new migration
+alembic revision --autogenerate -m "description"
+
+# Apply migrations
+alembic upgrade head
+
+# Rollback one migration
+alembic downgrade -1
+
+# View history
+alembic history

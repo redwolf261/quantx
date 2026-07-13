@@ -120,6 +120,16 @@ class ExplainerEngine:
 
         return self._explain_with_template(context_type, structured_data, goal_name)
 
+    def _get_safe_value(self, data: Dict, *keys: str, default: Any = 0) -> Any:
+        """Safely extract nested dictionary values."""
+        current = data
+        for key in keys:
+            if isinstance(current, dict):
+                current = current.get(key, {})
+            else:
+                return default
+        return current if current != {} else default
+
     async def _explain_with_llm(
         self,
         context_type: str,

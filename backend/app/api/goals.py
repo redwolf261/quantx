@@ -55,12 +55,18 @@ async def list_goals(
     user_id: UUID,
     current_user: Annotated[User, Depends(get_current_user)],
     db: Annotated[AsyncSession, Depends(get_db)],
+    skip: int = 0,
+    limit: int = 50,
 ):
     if current_user.role not in ("rm", "admin") and current_user.id != user_id:
         raise HTTPException(status_code=403, detail="Access denied")
 
     result = await db.execute(
-        select(Goal).where(Goal.user_id == user_id).order_by(Goal.priority, Goal.created_at)
+        select(Goal)
+        .where(Goal.user_id == user_id)
+        .order_by(Goal.priority, Goal.created_at)
+        .offset(skip)
+        .limit(limit)
     )
     goals = result.scalars().all()
     return [GoalOut.model_validate(g) for g in goals]

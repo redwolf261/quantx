@@ -368,8 +368,8 @@ def print_summary(customers: List[SyntheticCustomer]):
     print("=" * 60)
     print(f"Total customers:    {len(customers)}")
     print(f"Age range:          {min(ages)} - {max(ages)} (avg: {sum(ages)/len(ages):.0f})")
-    print(f"Monthly income:     ₹{min(incomes):,.0f} - ₹{max(incomes):,.0f}")
-    print(f"  Average:          ₹{sum(incomes)/len(incomes):,.0f}")
+    print(f"Monthly income:     INR {min(incomes):,.0f} - INR {max(incomes):,.0f}")
+    print(f"  Average:          INR {sum(incomes)/len(incomes):,.0f}")
     print(f"Health scores:      {min(scores):.0f} - {max(scores):.0f} (avg: {sum(scores)/len(scores):.0f})")
     print(f"Risk profiles:")
     for r in ["conservative", "moderate", "aggressive"]:

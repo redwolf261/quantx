@@ -32,5 +32,25 @@ services:
     depends_on:
       - postgres
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: futurelens_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://futurelens:futurelens_secret@postgres:5432/futurelens_db
+      - ENVIRONMENT=development
+      - DEBUG=false
+      - SECRET_KEY=${SECRET_KEY:-change-me-to-a-real-secret-key-at-least-32-chars}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
 volumes:
   postgres_data:
+

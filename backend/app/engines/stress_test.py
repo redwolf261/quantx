@@ -139,11 +139,12 @@ class StressTestEngine:
             return engine.run(target_amount=target_amount)
 
         elif scenario == "inflation_spike":
-            # +5% inflation for first 3 years
-            engine = MonteCarloEngine(
+            # +5% inflation for first 3 years only
+            # Simulate first 3 years with elevated inflation, then normal
+            spike_engine = MonteCarloEngine(
                 initial_wealth=self.initial_wealth,
                 monthly_sip=monthly_sip,
-                horizon_years=horizon_years,
+                horizon_years=min(3, horizon_years),
                 equity_allocation=self.equity_alloc,
                 debt_allocation=self.debt_alloc,
                 risk_profile=self.risk_profile,
@@ -151,7 +152,24 @@ class StressTestEngine:
                 inflation_rate=min(self.inflation + 0.05, 0.25),
                 num_simulations=num_simulations,
             )
-            return engine.run(target_amount=target_amount)
+            spike_result = spike_engine.run(target_amount=None)
+
+            remaining_years = max(0, horizon_years - 3)
+            if remaining_years == 0:
+                return spike_result
+
+            normal_engine = MonteCarloEngine(
+                initial_wealth=spike_result["p25_corpus"],  # Conservative: P25 after spike
+                monthly_sip=monthly_sip,
+                horizon_years=remaining_years,
+                equity_allocation=self.equity_alloc,
+                debt_allocation=self.debt_alloc,
+                risk_profile=self.risk_profile,
+                salary_growth_rate=self.salary_growth,
+                inflation_rate=self.inflation,
+                num_simulations=num_simulations,
+            )
+            return normal_engine.run(target_amount=target_amount)
 
         elif scenario == "salary_loss":
             # 50% income reduction → halve SIP for 2 years
@@ -175,7 +193,7 @@ class StressTestEngine:
                 return short_result
 
             long_engine = MonteCarloEngine(
-                initial_wealth=short_result["median_corpus"],
+                initial_wealth=short_result["p25_corpus"],  # Conservative P25 after loss period
                 monthly_sip=monthly_sip,
                 horizon_years=remaining_years,
                 equity_allocation=self.equity_alloc,

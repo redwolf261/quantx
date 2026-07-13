@@ -1,4 +1,5 @@
-"""Simulation API — triggers Monte Carlo engine."""
+"""Simulation API — triggers Monte Carlo engine with caching."""
+import time
 from typing import Annotated
 from uuid import UUID
 import uuid as uuid_lib
@@ -9,6 +10,7 @@ from sqlalchemy import select
 
 from app.core.database import get_db
 from app.core.deps import get_current_user
+from app.core.cache import simulation_cache
 from app.models.user import User
 from app.models.goal import Goal
 from app.models.financial_profile import FinancialProfile
@@ -54,19 +56,39 @@ async def run_simulation(
     twin = DigitalTwinEngine(profile)
     surplus_data = twin.compute_monthly_surplus()
 
-    # Run Monte Carlo
-    engine = MonteCarloEngine(
-        initial_wealth=initial_wealth,
-        monthly_sip=body.monthly_sip,
-        horizon_years=body.horizon_years,
-        equity_allocation=float(profile.equity_allocation),
-        debt_allocation=float(profile.debt_allocation),
-        risk_profile=profile.risk_profile.value,
-        salary_growth_rate=float(profile.salary_growth_rate),
-        inflation_rate=float(profile.inflation_rate),
-        num_simulations=body.num_simulations,
-    )
-    result = engine.run(target_amount=target_amount)
+    # Check cache for identical simulation parameters
+    cache_params = {
+        "initial_wealth": initial_wealth,
+        "monthly_sip": body.monthly_sip,
+        "horizon_years": body.horizon_years,
+        "equity_allocation": float(profile.equity_allocation),
+        "debt_allocation": float(profile.debt_allocation),
+        "risk_profile": profile.risk_profile.value,
+        "salary_growth_rate": float(profile.salary_growth_rate),
+        "inflation_rate": float(profile.inflation_rate),
+        "num_simulations": body.num_simulations,
+        "target_amount": target_amount,
+    }
+    cached = simulation_cache.get(cache_params)
+    if cached is not None:
+        result = cached
+    else:
+        # Run Monte Carlo with per-request seed (time-based for uniqueness)
+        request_seed = int(time.time() * 1000) % (2**31)
+        engine = MonteCarloEngine(
+            initial_wealth=initial_wealth,
+            monthly_sip=body.monthly_sip,
+            horizon_years=body.horizon_years,
+            equity_allocation=float(profile.equity_allocation),
+            debt_allocation=float(profile.debt_allocation),
+            risk_profile=profile.risk_profile.value,
+            salary_growth_rate=float(profile.salary_growth_rate),
+            inflation_rate=float(profile.inflation_rate),
+            num_simulations=body.num_simulations,
+            seed=request_seed,
+        )
+        result = engine.run(target_amount=target_amount)
+        simulation_cache.set(cache_params, result)
 
     # Persist result
     sim_record = SimulationResultModel(

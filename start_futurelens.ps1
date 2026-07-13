@@ -48,10 +48,10 @@ npm install
 Write-Host "Launching services..."
 
 # Start backend in a new window using Windows PowerShell activation
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; & .\venv\Scripts\Activate.ps1; python main.py" -WindowStyle Normal
+Start-Process powershell -ArgumentList "-ExecutionPolicy", "Bypass", "-NoExit", "-Command", "cd backend; & .\venv\Scripts\Activate.ps1; python main.py" -WindowStyle Normal
 
 # Start frontend in a new window
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd frontend; npm run dev" -WindowStyle Normal
+Start-Process powershell -ArgumentList "-ExecutionPolicy", "Bypass", "-NoExit", "-Command", "cd frontend; npm run dev" -WindowStyle Normal
 
 Write-Host "=================================================="
 Write-Host "   FutureLens is starting up!"

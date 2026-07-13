@@ -1,6 +1,7 @@
 """Financial Profile ORM model."""
 import uuid
 from datetime import datetime, timezone
+from typing import Optional
 from sqlalchemy import String, Integer, Numeric, DateTime, ForeignKey, Enum as SAEnum, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 import enum
@@ -22,8 +23,8 @@ class FinancialProfile(Base):
 
     # Personal
     age: Mapped[int] = mapped_column(Integer, nullable=False)
-    occupation: Mapped[str | None] = mapped_column(String(255))
-    city: Mapped[str | None] = mapped_column(String(100))
+    occupation: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    city: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     city_tier: Mapped[int] = mapped_column(Integer, default=1)
 
     # Income
@@ -48,7 +49,7 @@ class FinancialProfile(Base):
     risk_profile: Mapped[RiskProfile] = mapped_column(SAEnum(RiskProfile), default=RiskProfile.moderate)
 
     # Health score (cached computed value)
-    health_score: Mapped[float | None] = mapped_column(Numeric(5, 2))
+    health_score: Mapped[Optional[float]] = mapped_column(Numeric(5, 2), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
