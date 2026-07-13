@@ -143,9 +143,17 @@ class MonteCarloEngine:
             # Treat target_amount as the nominal future target
             success_prob = float(np.mean(final_wealth >= target_amount))
         else:
-            # No explicit target — use "positive real wealth growth" as success
-            min_acceptable = self.initial_wealth * (1 + self.inflation_rate) ** self.horizon_years
-            success_prob = float(np.mean(final_wealth >= min_acceptable))
+            # No explicit goal target — use a meaningful retirement corpus benchmark:
+            # 20x annual SIP (e.g., if SIP=₹15k/mo → target = ₹36L)
+            # This is far more realistic than "beat inflation" which gives trivial ~100%
+            annual_sip = self.monthly_sip * 12
+            if annual_sip > 0:
+                implied_target = annual_sip * 20
+            else:
+                # Fallback: 3x inflation-adjusted initial wealth
+                implied_target = self.initial_wealth * (1 + self.inflation_rate) ** self.horizon_years * 3
+            implied_target = max(implied_target, 500_000)  # minimum ₹5L floor
+            success_prob = float(np.mean(final_wealth >= implied_target))
 
         # ── Percentiles ───────────────────────────────────────────────────────
         percentiles = np.percentile(final_wealth, [10, 25, 50, 75, 90])
