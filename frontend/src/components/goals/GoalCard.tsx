@@ -79,7 +79,7 @@ export default function GoalCard({ goal }: GoalCardProps) {
           {goal.required_monthly_sip && (
             <div className="flex justify-between">
               <span>Required SIP</span>
-              <span className="font-mono text-violet-400">{formatINR(goal.required_monthly_sip, true)}/mo</span>
+              <span className="font-mono text-teal-400">{formatINR(goal.required_monthly_sip, true)}/mo</span>
             </div>
           )}
         </div>
@@ -92,7 +92,7 @@ export default function GoalCard({ goal }: GoalCardProps) {
               className="w-4 h-1 rounded-full"
               style={{
                 background: i < goal.priority
-                  ? "linear-gradient(90deg, #8b5cf6, #6d28d9)"
+                  ? "linear-gradient(90deg, #f97316, #0f766e)"
                   : "rgba(255,255,255,0.08)",
               }}
             />

@@ -14,8 +14,8 @@
   --navy-900: #070d1a;
   --navy-800: #0d1b33;
   --navy-700: #112244;
-  --violet-500: #8b5cf6;
-  --violet-400: #a78bfa;
+  --teal-500: #f97316;
+  --teal-400: #a78bfa;
   --emerald-500: #10b981;
   --emerald-400: #34d399;
   --crimson-500: #ef4444;
@@ -51,11 +51,11 @@ body {
 /* ── Scrollbar ────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--navy-900); }
-::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.4); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.6); }
+::-webkit-scrollbar-thumb { background: rgba(20, 184, 166, 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(20, 184, 166, 0.6); }
 
 /* ── Selection ───────────────────────────────────────── */
-::selection { background: rgba(139, 92, 246, 0.3); color: white; }
+::selection { background: rgba(20, 184, 166, 0.3); color: white; }
 
 /* ══════════════════════════════════════════════════════
    LAYER: BASE
@@ -85,40 +85,40 @@ body {
   }
   .glass-card:hover {
     background: var(--glass-hover);
-    border-color: rgba(139, 92, 246, 0.2);
+    border-color: rgba(20, 184, 166, 0.2);
     transform: translateY(-1px);
-    box-shadow: 0 8px 40px rgba(139, 92, 246, 0.12);
+    box-shadow: 0 8px 40px rgba(20, 184, 166, 0.12);
   }
 
   /* ── Glow Card ──────────────────────────────────────── */
   .glow-card {
     @apply glass-card;
-    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.15), 0 4px 24px rgba(139, 92, 246, 0.08);
+    box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.15), 0 4px 24px rgba(20, 184, 166, 0.08);
   }
   .glow-card:hover {
-    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3), 0 8px 40px rgba(139, 92, 246, 0.15);
+    box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.3), 0 8px 40px rgba(20, 184, 166, 0.15);
   }
 
   /* ── Buttons ────────────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white text-sm transition-all duration-200 select-none;
-    background: linear-gradient(135deg, #6d28d9, #8b5cf6);
-    box-shadow: 0 4px 16px rgba(109, 40, 217, 0.4);
+    background: linear-gradient(135deg, #0f766e, #f97316);
+    box-shadow: 0 4px 16px rgba(15, 118, 110, 0.4);
   }
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(109, 40, 217, 0.5);
+    box-shadow: 0 8px 24px rgba(15, 118, 110, 0.5);
   }
   .btn-primary:active { transform: translateY(0); }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-violet-400 text-sm transition-all duration-200 select-none border;
-    background: rgba(139, 92, 246, 0.08);
-    border-color: rgba(139, 92, 246, 0.25);
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-teal-400 text-sm transition-all duration-200 select-none border;
+    background: rgba(20, 184, 166, 0.08);
+    border-color: rgba(20, 184, 166, 0.25);
   }
   .btn-secondary:hover {
-    background: rgba(139, 92, 246, 0.15);
-    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(20, 184, 166, 0.15);
+    border-color: rgba(20, 184, 166, 0.4);
     transform: translateY(-1px);
   }
 
@@ -145,8 +145,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
   .form-input:focus {
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+    border-color: rgba(20, 184, 166, 0.5);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
     background: rgba(255, 255, 255, 0.06);
   }
   .form-input::placeholder { color: #475569; }
@@ -154,7 +154,7 @@ body {
   .form-select {
     @apply form-input cursor-pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b5cf6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f97316' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 16px center;
     padding-right: 40px;
@@ -171,7 +171,7 @@ body {
   .badge-success { @apply badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/20; }
   .badge-warning { @apply badge bg-amber-500/15 text-amber-400 border border-amber-500/20; }
   .badge-danger  { @apply badge bg-red-500/15 text-red-400 border border-red-500/20; }
-  .badge-violet  { @apply badge bg-violet-500/15 text-violet-400 border border-violet-500/20; }
+  .badge-teal  { @apply badge bg-teal-500/15 text-teal-400 border border-teal-500/20; }
   .badge-muted   { @apply badge bg-slate-500/15 text-slate-400 border border-slate-500/20; }
 
   /* ── Stat Card ──────────────────────────────────────── */
@@ -202,12 +202,12 @@ body {
   }
   .nav-item:hover {
     @apply text-white;
-    background: rgba(139, 92, 246, 0.1);
+    background: rgba(20, 184, 166, 0.1);
   }
   .nav-item.active {
     @apply text-white;
-    background: linear-gradient(135deg, rgba(109, 40, 217, 0.3), rgba(139, 92, 246, 0.15));
-    border-left: 2px solid #8b5cf6;
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.3), rgba(20, 184, 166, 0.15));
+    border-left: 2px solid #f97316;
   }
 
   /* ── Progress Bar ───────────────────────────────────── */
@@ -224,15 +224,15 @@ body {
     @apply w-full h-2 rounded-full appearance-none cursor-pointer;
     background: linear-gradient(
       to right,
-      #8b5cf6 0%,
-      #8b5cf6 var(--pct, 50%),
+      #f97316 0%,
+      #f97316 var(--pct, 50%),
       rgba(255,255,255,0.1) var(--pct, 50%)
     );
   }
   .fl-slider::-webkit-slider-thumb {
     @apply appearance-none w-5 h-5 rounded-full cursor-pointer;
-    background: linear-gradient(135deg, #6d28d9, #8b5cf6);
-    box-shadow: 0 2px 8px rgba(109, 40, 217, 0.5);
+    background: linear-gradient(135deg, #0f766e, #f97316);
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.5);
     border: 2px solid rgba(255,255,255,0.2);
   }
 
@@ -249,8 +249,8 @@ body {
   }
   .section-header-icon {
     @apply p-2.5 rounded-xl;
-    background: linear-gradient(135deg, rgba(109, 40, 217, 0.2), rgba(139, 92, 246, 0.1));
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.2), rgba(20, 184, 166, 0.1));
+    border: 1px solid rgba(20, 184, 166, 0.2);
   }
 
   /* ── Metric pill ─────────────────────────────────────── */
@@ -271,8 +271,8 @@ body {
   }
   .tab-item.active {
     @apply text-white;
-    background: linear-gradient(135deg, rgba(109, 40, 217, 0.4), rgba(139, 92, 246, 0.25));
-    box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.4), rgba(20, 184, 166, 0.25));
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3);
   }
 
   /* ── Risk Badge ─────────────────────────────────────── */
@@ -291,7 +291,7 @@ body {
   .fl-tooltip {
     @apply absolute z-50 px-3 py-2 rounded-lg text-xs font-medium text-white pointer-events-none;
     background: rgba(13, 27, 51, 0.95);
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(20, 184, 166, 0.2);
     backdrop-filter: blur(8px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
@@ -301,8 +301,8 @@ body {
    LAYER: UTILITIES
 ══════════════════════════════════════════════════════ */
 @layer utilities {
-  .text-gradient-violet {
-    background: linear-gradient(135deg, #a78bfa, #8b5cf6, #6d28d9);
+  .text-gradient-teal {
+    background: linear-gradient(135deg, #a78bfa, #f97316, #0f766e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -322,13 +322,13 @@ body {
 
   .bg-mesh {
     background-image:
-      radial-gradient(at 20% 80%, rgba(109, 40, 217, 0.15) 0%, transparent 50%),
+      radial-gradient(at 20% 80%, rgba(15, 118, 110, 0.15) 0%, transparent 50%),
       radial-gradient(at 80% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-      radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
+      radial-gradient(at 50% 50%, rgba(20, 184, 166, 0.05) 0%, transparent 60%);
   }
 
   .glow-violet {
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.1);
+    box-shadow: 0 0 30px rgba(20, 184, 166, 0.3), 0 0 60px rgba(20, 184, 166, 0.1);
   }
   .glow-emerald {
     box-shadow: 0 0 30px rgba(16, 185, 129, 0.3), 0 0 60px rgba(16, 185, 129, 0.1);
@@ -356,7 +356,7 @@ body {
 }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
   background: rgba(7, 13, 26, 0.95) !important;
-  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  border: 1px solid rgba(20, 184, 166, 0.25) !important;
   border-radius: 12px !important;
   backdrop-filter: blur(12px) !important;
 }

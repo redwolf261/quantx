@@ -48,7 +48,7 @@ export default function RMDashboardPage() {
         {/* Stats row */}
         <div className="grid grid-cols-4 gap-4">
           {[
-            { label: "Total Customers", value: stats.total, icon: "👥", color: "text-violet-400" },
+            { label: "Total Customers", value: stats.total, icon: "👥", color: "text-teal-400" },
             { label: "At Risk", value: stats.atRisk, icon: "⚠️", color: "text-red-400" },
             { label: "Healthy Portfolios", value: stats.highHealth, icon: "✅", color: "text-emerald-400" },
             { label: "Avg Success Prob.", value: formatPct(stats.avgProbability), icon: "📊", color: "text-amber-400" },
@@ -119,7 +119,7 @@ export default function RMDashboardPage() {
                   <div className="flex items-start gap-4">
                     {/* Avatar */}
                     <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                      style={{ background: "linear-gradient(135deg, #7c3aed, #10b981)" }}>
+                      style={{ background: "linear-gradient(135deg, #0d9488, #10b981)" }}>
                       {customer.user.full_name[0]}
                     </div>
 

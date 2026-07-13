@@ -64,7 +64,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         <div className="p-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #6d28d9, #8b5cf6)" }}>
+              style={{ background: "linear-gradient(135deg, #0f766e, #f97316)" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M12 2v3m0 14v3M2 12h3m14 0h3" />
@@ -81,12 +81,12 @@ export default function AppLayout({ children }: AppLayoutProps) {
         <div className="p-4 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white"
-              style={{ background: "linear-gradient(135deg, #7c3aed, #10b981)" }}>
+              style={{ background: "linear-gradient(135deg, #0d9488, #10b981)" }}>
               {user?.full_name?.[0] || "U"}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white truncate">{user?.full_name}</p>
-              <span className={`badge text-xs ${user?.role === "rm" ? "badge-violet" : "badge-muted"}`}>
+              <span className={`badge text-xs ${user?.role === "rm" ? "badge-teal" : "badge-muted"}`}>
                 {user?.role?.toUpperCase()}
               </span>
             </div>

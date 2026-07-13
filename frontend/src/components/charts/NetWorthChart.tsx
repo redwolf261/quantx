@@ -37,8 +37,8 @@ export default function NetWorthChart({ bands }: NetWorthChartProps) {
         <AreaChart data={bands} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
           <defs>
             <linearGradient id="p90" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.15} />
-              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+              <stop offset="5%" stopColor="#f97316" stopOpacity={0.15} />
+              <stop offset="95%" stopColor="#f97316" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="p50" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
@@ -71,7 +71,7 @@ export default function NetWorthChart({ bands }: NetWorthChartProps) {
             type="monotone"
             dataKey="p90"
             name="Best (P90)"
-            stroke="#8b5cf6"
+            stroke="#f97316"
             strokeWidth={1.5}
             strokeDasharray="4 4"
             fill="url(#p90)"

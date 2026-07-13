@@ -145,9 +145,9 @@ function FutureCard({
                 <TradeoffExplorer onSelect={handleTradeoff} />
               )}
               {calculating && (
-                <div className="mt-4 p-5 rounded-2xl flex flex-col items-center justify-center bg-indigo-500/10 border border-indigo-500/20">
-                  <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin mb-3" />
-                  <div className="text-xs text-indigo-400 font-bold uppercase tracking-widest">Recalculating 5,000 Paths...</div>
+                <div className="mt-4 p-5 rounded-2xl flex flex-col items-center justify-center bg-teal-500/10 border border-teal-500/20">
+                  <div className="w-8 h-8 rounded-full border-2 border-teal-500 border-t-transparent animate-spin mb-3" />
+                  <div className="text-xs text-teal-400 font-bold uppercase tracking-widest">Recalculating 5,000 Paths...</div>
                 </div>
               )}
               {tradeoffResolved && (
@@ -214,7 +214,7 @@ function DNARadar({ dna }: { dna: DNAResult["dna"] }) {
         </div>
         <div className="text-right">
           <div className="text-2xl font-black" style={{
-            background: "linear-gradient(135deg,#6d28d9,#10b981)",
+            background: "linear-gradient(135deg, #0f766e, #10b981)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>{Math.round(dna.overall)}</div>
           <div className="text-xs text-slate-500">overall</div>
@@ -224,8 +224,8 @@ function DNARadar({ dna }: { dna: DNAResult["dna"] }) {
         <RadarChart data={data} cx="50%" cy="50%">
           <PolarGrid stroke="rgba(255,255,255,0.06)" />
           <PolarAngleAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11 }} />
-          <Radar dataKey="value" stroke="#6d28d9" fill="#6d28d9" fillOpacity={0.25}
-            strokeWidth={2} dot={{ fill: "#8b5cf6", r: 3 }} />
+          <Radar dataKey="value" stroke="#0f766e" fill="#0f766e" fillOpacity={0.25}
+            strokeWidth={2} dot={{ fill: "#f97316", r: 3 }} />
         </RadarChart>
       </ResponsiveContainer>
       {/* Score bars */}
@@ -327,7 +327,7 @@ function ScenarioLibrary({
               background: activeSid === s.id
                 ? "rgba(109,40,217,0.25)"
                 : "rgba(255,255,255,0.04)",
-              border: `1px solid ${activeSid === s.id ? "#7c3aed" : "rgba(255,255,255,0.08)"}`,
+              border: `1px solid ${activeSid === s.id ? "#0d9488" : "rgba(255,255,255,0.08)"}`,
             }}
           >
             <span className="text-xl block mb-1">{s.emoji}</span>
@@ -470,7 +470,7 @@ export default function TwinPage() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-              style={{ background: "linear-gradient(135deg,#6d28d9,#10b981)" }}>🧬</div>
+              style={{ background: "linear-gradient(135deg, #0f766e, #10b981)" }}>🧬</div>
             <div>
               <h1 className="text-xl font-black text-white">Financial Digital Twin</h1>
               <p className="text-xs text-slate-500">Your living financial model — multiple futures, one intelligent engine</p>
@@ -485,7 +485,7 @@ export default function TwinPage() {
             <h3 className="text-lg font-bold text-white mb-2">Complete Your Financial Profile</h3>
             <p className="text-sm text-slate-400 mb-4">The Financial Twin needs your income, expenses, and goals to generate personalised futures.</p>
             <a href="/profile" className="inline-block px-6 py-2 rounded-xl text-sm font-semibold text-white"
-              style={{ background: "linear-gradient(135deg,#6d28d9,#7c3aed)" }}>
+              style={{ background: "linear-gradient(135deg, #0f766e, #0d9488)" }}>
               Set Up Profile →
             </a>
           </div>
@@ -524,8 +524,8 @@ export default function TwinPage() {
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   className="mt-4 rounded-xl p-4 flex items-center gap-3"
                   style={{ background: "rgba(109,40,217,0.15)", border: "1px solid rgba(109,40,217,0.3)" }}>
-                  <div className="w-4 h-4 rounded-full border-2 border-violet-400 border-t-transparent animate-spin" />
-                  <span className="text-xs text-violet-300">Running scenario simulation...</span>
+                  <div className="w-4 h-4 rounded-full border-2 border-teal-400 border-t-transparent animate-spin" />
+                  <span className="text-xs text-teal-300">Running scenario simulation...</span>
                 </motion.div>
               )}
               {scenarioResult && !loadingScenario && (
@@ -584,7 +584,7 @@ export default function TwinPage() {
                 onClick={loadFutures}
                 disabled={loadingFutures}
                 className="text-xs px-4 py-2 rounded-xl font-semibold transition-all"
-                style={{ background: "linear-gradient(135deg,#6d28d9,#7c3aed)", color: "white" }}
+                style={{ background: "linear-gradient(135deg, #0f766e, #0d9488)", color: "white" }}
               >
                 {loadingFutures ? "Computing..." : "↻ Refresh"}
               </button>

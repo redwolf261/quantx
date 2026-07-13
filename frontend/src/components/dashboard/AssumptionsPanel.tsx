@@ -6,7 +6,7 @@ export default function AssumptionsPanel() {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card p-6 mt-6 border border-violet-500/20"
+      className="glass-card p-6 mt-6 border border-teal-500/20"
       style={{ background: "rgba(139, 92, 246, 0.05)" }}
     >
       <div className="flex items-center gap-2 mb-4">
@@ -37,7 +37,7 @@ function AssumptionItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-white/5 p-3 rounded-xl border border-white/5">
       <p className="text-xs text-slate-400 font-medium mb-1 uppercase tracking-wider">{label}</p>
-      <p className="text-sm text-violet-300 font-semibold">{value}</p>
+      <p className="text-sm text-teal-300 font-semibold">{value}</p>
     </div>
   );
 }

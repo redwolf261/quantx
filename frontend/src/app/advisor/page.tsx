@@ -110,7 +110,7 @@ export default function IntelligencePage() {
           {/* Avatar */}
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 animate-glow-pulse"
             style={{
-              background: "linear-gradient(135deg, #6d28d9, #10b981)",
+              background: "linear-gradient(135deg, #0f766e, #10b981)",
               boxShadow: "0 0 30px rgba(109,40,217,0.4)",
             }}>
             🤖
@@ -122,10 +122,10 @@ export default function IntelligencePage() {
         </motion.div>
 
         {/* Important note */}
-        <div className="glass-card p-4 border-violet-500/20"
+        <div className="glass-card p-4 border-teal-500/20"
           style={{ borderColor: "rgba(139,92,246,0.2)" }}>
           <p className="text-xs text-slate-400">
-            <span className="text-violet-400 font-semibold">⚡ How it works:</span>{" "}
+            <span className="text-teal-400 font-semibold">⚡ How it works:</span>{" "}
             Our analytics engine (Monte Carlo, optimization, stress testing) first computes precise
             financial insights. The AI then <strong className="text-white">only explains</strong> those
             pre-computed results in plain language — it never makes financial calculations itself.
@@ -142,7 +142,7 @@ export default function IntelligencePage() {
                   key={opt.value}
                   onClick={() => setContextType(opt.value)}
                   className={`w-full text-left p-4 rounded-xl transition-all ${
-                    contextType === opt.value ? "border-violet-500/30" : "border-white/06"
+                    contextType === opt.value ? "border-teal-500/30" : "border-white/06"
                   }`}
                   style={{
                     background: contextType === opt.value
@@ -214,9 +214,9 @@ export default function IntelligencePage() {
                   className="glass-card p-8 text-center"
                 >
                   <div className="flex items-center gap-3 justify-center mb-4">
-                    <div className="w-2 h-2 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <div className="w-2 h-2 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <div className="w-2 h-2 rounded-full bg-violet-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <div className="w-2 h-2 rounded-full bg-teal-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <div className="w-2 h-2 rounded-full bg-teal-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <div className="w-2 h-2 rounded-full bg-teal-400 animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                   <p className="text-slate-400 text-sm">Running financial analysis + generating explanation...</p>
                 </motion.div>
@@ -233,7 +233,7 @@ export default function IntelligencePage() {
                   <div className="glass-card p-6">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-8 h-8 rounded-xl flex items-center justify-center text-base"
-                        style={{ background: "linear-gradient(135deg, #6d28d9, #10b981)" }}>
+                        style={{ background: "linear-gradient(135deg, #0f766e, #10b981)" }}>
                         🤖
                       </div>
                       <div>

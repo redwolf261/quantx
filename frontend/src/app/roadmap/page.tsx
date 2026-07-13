@@ -96,7 +96,7 @@ export default function RoadmapPage() {
               style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
               
               {/* Background gradient */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-emerald-500" />
 
               {/* Destination */}
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center mb-8">
@@ -185,11 +185,11 @@ export default function RoadmapPage() {
                     <div className="h-px w-full bg-white/5 my-8" />
 
                     {/* Alternative Route Suggestion */}
-                    <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-5">
+                    <div className="bg-teal-500/10 border border-teal-500/20 rounded-2xl p-5">
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-xs">⑂</div>
-                          <div className="text-indigo-400 font-bold">Alternative Route Found</div>
+                          <div className="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-400 text-xs">⑂</div>
+                          <div className="text-teal-400 font-bold">Alternative Route Found</div>
                         </div>
                         <div className="text-right">
                           <div className="text-emerald-400 font-bold text-xl">{(altProb * 100).toFixed(0)}%</div>
@@ -204,7 +204,7 @@ export default function RoadmapPage() {
                       <button
                         onClick={handleAcceptRoute}
                         className="w-full py-3 rounded-xl font-bold text-white transition-all transform hover:scale-[1.02] active:scale-95"
-                        style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", boxShadow: "0 10px 25px -5px rgba(99,102,241,0.4)" }}
+                        style={{ background: "linear-gradient(135deg,#14b8a6,#f97316)", boxShadow: "0 10px 25px -5px rgba(99,102,241,0.4)" }}
                       >
                         Accept New Route
                       </button>

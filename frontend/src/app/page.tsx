@@ -21,7 +21,7 @@ export default function Home() {
       <div className="hidden lg:flex flex-col justify-center px-16 flex-1 relative overflow-hidden">
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-700/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-700/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-500/08 rounded-full blur-3xl" />
         </div>
 
@@ -34,7 +34,7 @@ export default function Home() {
           {/* Logo */}
           <div className="flex items-center gap-3 mb-10">
             <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #6d28d9, #8b5cf6)" }}>
+              style={{ background: "linear-gradient(135deg, #0f766e, #f97316)" }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.93 4.93l2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12" />
@@ -48,7 +48,7 @@ export default function Home() {
 
           <h2 className="text-5xl font-bold text-white leading-tight mb-6">
             See Your
-            <span className="block text-gradient-violet">Financial Future</span>
+            <span className="block text-gradient-teal">Financial Future</span>
             Clearly
           </h2>
 
@@ -83,7 +83,7 @@ export default function Home() {
 
           {/* Badge */}
           <div className="mt-8">
-            <span className="badge-violet px-3 py-1.5 text-xs rounded-full">
+            <span className="badge-teal px-3 py-1.5 text-xs rounded-full">
               🏆 IDBI Innovate 2026 · Digital Wealth Management Track
             </span>
           </div>

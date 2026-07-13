@@ -73,7 +73,7 @@ export default function LoginForm() {
       {/* Mobile logo */}
       <div className="flex items-center gap-3 mb-8 lg:hidden">
         <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: "linear-gradient(135deg, #6d28d9, #8b5cf6)" }}>
+          style={{ background: "linear-gradient(135deg, #0f766e, #f97316)" }}>
           <span className="text-white text-lg">🔭</span>
         </div>
         <div>
@@ -203,7 +203,7 @@ export default function LoginForm() {
           <div className="mt-4 px-3 py-2 rounded-lg text-xs text-slate-500 border border-white/05"
             style={{ background: "rgba(255,255,255,0.02)" }}>
             <strong className="text-slate-400">Demo:</strong> Use any synthetic customer email
-            from the seeded data. Password: <code className="text-violet-400">FutureLens@2026</code>
+            from the seeded data. Password: <code className="text-teal-400">FutureLens@2026</code>
           </div>
         )}
       </div>

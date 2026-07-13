@@ -80,7 +80,7 @@ export default function FuturesPage() {
           name: "Current Plan",
           probability: Math.round((baseResult.success_probability ?? 0) * 100),
           corpus: Math.round(baseResult.median_corpus / 1e5),
-          fill: "#8b5cf6",
+          fill: "#f97316",
         },
         {
           name: "Optimized",
@@ -176,7 +176,7 @@ export default function FuturesPage() {
                     probability={baseResult.success_probability}
                     corpus={baseResult.median_corpus}
                     sip={sip}
-                    color="#8b5cf6"
+                    color="#f97316"
                     highlight={false}
                   />
                   <PlanCard
@@ -306,7 +306,7 @@ export default function FuturesPage() {
                             formatter={(v: any) => [formatPct(v), "Probability"]}
                             labelFormatter={(v) => `SIP: ${formatINR(Number(v), true)}`}
                           />
-                          <Bar dataKey="probability" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="probability" fill="#f97316" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>

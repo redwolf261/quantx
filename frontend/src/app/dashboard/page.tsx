@@ -122,7 +122,7 @@ export default function DashboardPage() {
               <div className="lg:col-span-2 glass-card p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white font-semibold">Wealth Projection</h3>
-                  <span className="badge-violet text-xs">Monte Carlo P50</span>
+                  <span className="badge-teal text-xs">Monte Carlo P50</span>
                 </div>
                 {data.latest_simulation?.percentile_bands ? (
                   <NetWorthChart bands={data.latest_simulation.percentile_bands} />
@@ -202,7 +202,7 @@ function KpiCard({ label, value, icon, color }: { label: string; value: string; 
     gold: "rgba(245,158,11,0.15)",
   };
   const textMap: Record<string, string> = {
-    violet: "text-violet-400",
+    violet: "text-teal-400",
     emerald: "text-emerald-400",
     crimson: "text-red-400",
     gold: "text-amber-400",

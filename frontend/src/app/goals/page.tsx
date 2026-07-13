@@ -145,7 +145,7 @@ export default function GoalsPage() {
             {form.target_amount > 0 && form.target_year > new Date().getFullYear() && (
               <div className="mt-4 px-4 py-3 rounded-xl text-sm"
                 style={{ background: "rgba(139,92,246,0.08)", border: "1px solid rgba(139,92,246,0.2)" }}>
-                <span className="text-violet-400 font-semibold">Quick Estimate: </span>
+                <span className="text-teal-400 font-semibold">Quick Estimate: </span>
                 <span className="text-slate-300">
                   {yearsUntil(form.target_year)} years to reach {formatINR(form.target_amount, true)}.
                   Estimated SIP at 10% return: ₹{Math.round(

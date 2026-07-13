@@ -75,10 +75,10 @@ export default function PlaygroundPage() {
             {/* SIP Slider */}
             <div className="glass-card p-5 space-y-4">
               <h3 className="text-white font-semibold flex items-center gap-2">
-                <span className="text-violet-400">₹</span> Monthly SIP
+                <span className="text-teal-400">₹</span> Monthly SIP
               </h3>
 
-              <div className="text-3xl font-bold font-mono text-violet-400">
+              <div className="text-3xl font-bold font-mono text-teal-400">
                 {formatINR(sip)}
               </div>
 
@@ -106,8 +106,8 @@ export default function PlaygroundPage() {
                     onClick={() => setSip(v)}
                     className={`text-xs px-3 py-1 rounded-full border transition-all ${
                       sip === v
-                        ? "border-violet-500 bg-violet-500/20 text-violet-300"
-                        : "border-white/10 text-slate-400 hover:border-violet-500/40"
+                        ? "border-teal-500 bg-teal-500/20 text-teal-300"
+                        : "border-white/10 text-slate-400 hover:border-teal-500/40"
                     }`}
                   >
                     {formatINR(v, true)}
@@ -222,7 +222,7 @@ export default function PlaygroundPage() {
                     {
                       label: "Best Case (P90)",
                       value: result ? formatINR(result.p90_corpus, true) : "—",
-                      color: "text-violet-400",
+                      color: "text-teal-400",
                     },
                     {
                       label: "Worst Case (P10)",
@@ -289,7 +289,7 @@ export default function PlaygroundPage() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-white font-semibold">Wealth Projection Fan</h3>
                 <div className="flex gap-3 text-xs">
-                  <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-purple-400 inline-block rounded dashed" />Best</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-teal-400 inline-block rounded dashed" />Best</span>
                   <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-emerald-400 inline-block rounded" />Median</span>
                   <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-red-400 inline-block rounded dashed" />Worst</span>
                 </div>

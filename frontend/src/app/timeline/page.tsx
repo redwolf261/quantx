@@ -29,7 +29,7 @@ export default function TimelinePage() {
           {/* Header */}
           <div className="mb-10 text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl mb-4 text-2xl"
-              style={{ background: "linear-gradient(135deg,#6d28d9,#10b981)" }}>⏳</div>
+              style={{ background: "linear-gradient(135deg, #0f766e, #10b981)" }}>⏳</div>
             <h1 className="text-2xl font-black text-white mb-2">Financial Timeline</h1>
             <p className="text-sm text-slate-400">Your projected financial life milestones, year by year.</p>
           </div>
@@ -58,7 +58,7 @@ export default function TimelinePage() {
             <div className="relative">
               {/* Vertical line */}
               <div className="absolute top-0 bottom-0 left-[4.5rem] w-px"
-                style={{ background: "linear-gradient(to bottom, #7c3aed, rgba(255,255,255,0.06))" }} />
+                style={{ background: "linear-gradient(to bottom, #0d9488, rgba(255,255,255,0.06))" }} />
               
               <div className="space-y-8">
                 {timeline.events.map((event, i) => {
@@ -74,7 +74,7 @@ export default function TimelinePage() {
                     >
                       {/* Year column */}
                       <div className="w-16 flex-shrink-0 text-right pt-4">
-                        <span className={`text-lg font-black ${isPast ? "text-violet-400" : "text-slate-500"}`}>
+                        <span className={`text-lg font-black ${isPast ? "text-teal-400" : "text-slate-500"}`}>
                           {event.year}
                         </span>
                         {isCurrent && <div className="text-[10px] uppercase font-bold text-emerald-400 mt-1">This Year</div>}
@@ -82,7 +82,7 @@ export default function TimelinePage() {
 
                       {/* Node */}
                       <div className="absolute left-[4.5rem] -translate-x-1/2 top-5 w-4 h-4 rounded-full border-4 border-[#070d1a]"
-                        style={{ background: isPast ? "#10b981" : "#6d28d9" }} />
+                        style={{ background: isPast ? "#10b981" : "#0f766e" }} />
 
                       {/* Content Card */}
                       <div className="flex-1">

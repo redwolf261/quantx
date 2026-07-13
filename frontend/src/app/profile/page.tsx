@@ -83,7 +83,7 @@ export default function ProfilePage() {
                   }`}
                   style={{
                     background: i <= step
-                      ? "linear-gradient(135deg, #6d28d9, #8b5cf6)"
+                      ? "linear-gradient(135deg, #0f766e, #f97316)"
                       : "rgba(255,255,255,0.08)",
                   }}
                 >
@@ -218,7 +218,7 @@ export default function ProfilePage() {
                   className="h-full rounded-full"
                   style={{
                     width: `${form.equity_allocation * 100}%`,
-                    background: "linear-gradient(90deg, #8b5cf6, #10b981)",
+                    background: "linear-gradient(90deg, #f97316, #10b981)",
                   }}
                   animate={{ width: `${form.equity_allocation * 100}%` }}
                   transition={{ duration: 0.3 }}
