@@ -13,7 +13,3 @@ services:
       - key: ALLOWED_ORIGINS
         value: "*"
       # You can add OPENAI_API_KEY here via Render dashboard
-    disk:
-      name: futurelens-data
-      mountPath: /opt/render/project/src/backend/data
-      sizeGB: 1
