@@ -53,7 +53,7 @@ export default function RoadmapPage() {
   const goalYear = dashboard?.goals?.[0]?.target_year || currentYear + 25;
   const goalName = dashboard?.goals?.[0]?.goal_name || "Retirement";
 
-  const obstacle = attribution?.negative_factors?.[0] || { label: "Unknown Risk", description: "Market volatility detected on path." };
+  const obstacle = attribution?.negative_factors?.[0] || { label: "Unknown Risk", description: "Market volatility detected on path.", impact_pct: 0 };
   
   const altSipDelta = smartBalance?.sip_delta || 0;
   const currentProb = attribution?.base_probability || 0;
