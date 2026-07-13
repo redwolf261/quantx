@@ -6,12 +6,13 @@ import { motion } from "framer-motion";
 import { useAuth } from "@/lib/store";
 
 const NAV_ITEMS = [
-  { href: "/dashboard",    label: "Dashboard",      icon: "⊞", desc: "Overview" },
-  { href: "/profile",      label: "My Profile",     icon: "◉", desc: "Financial data" },
-  { href: "/goals",        label: "Goal Planner",   icon: "🎯", desc: "Set targets" },
-  { href: "/playground",   label: "Playground",     icon: "⚡", desc: "What-if scenarios" },
-  { href: "/futures",      label: "Future Forks",   icon: "⑂", desc: "Compare paths" },
-  { href: "/advisor",      label: "AI Advisor",     icon: "🤖", desc: "Get insights" },
+  { href: "/twin",         label: "Financial Twin", desc: "Command Center",  icon: "🧬" },
+  { href: "/roadmap",      label: "Financial GPS",  desc: "Live navigation", icon: "📍" },
+  { href: "/timeline",     label: "Timeline",       desc: "Life milestones", icon: "⏳" },
+  { href: "/futures",      label: "Future Forks",   desc: "Compare paths",   icon: "⑂" },
+  { href: "/advisor",      label: "Fin Intelligence",desc: "AI insights",    icon: "🤖" },
+  { href: "/profile",      label: "My Profile",     desc: "Financial data",  icon: "◉" },
+  { href: "/playground",   label: "Playground",     desc: "Scenarios",       icon: "⚡" },
 ];
 
 const RM_NAV = [

@@ -11,7 +11,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 import time
 from app.core.config import settings
 from app.core.database import engine, Base, AsyncSessionLocal
-from app.api import auth, profile, goals, simulation, stress_test, optimization, explain, dashboard
+from app.api import auth, profile, goals, simulation, stress_test, optimization, explain, dashboard, twin
 from sqlalchemy import text
 
 log = structlog.get_logger()
@@ -73,6 +73,7 @@ app.include_router(stress_test.router,  prefix="/stress-test",  tags=["Stress Te
 app.include_router(optimization.router, prefix="/optimization", tags=["Optimization"])
 app.include_router(explain.router,      prefix="/explain",      tags=["AI Explainer"])
 app.include_router(dashboard.router,    prefix="/dashboard",    tags=["Dashboard"])
+app.include_router(twin.router,         prefix="/twin",         tags=["Financial Twin"])
 
 
 @app.get("/health", tags=["Health"])

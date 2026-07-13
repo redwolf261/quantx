@@ -222,3 +222,187 @@ export interface ApiError {
 }
 
 export type LoadingState = "idle" | "loading" | "success" | "error";
+
+// ── Financial Twin ────────────────────────────────────────────────────────────
+
+export interface TradeoffItem {
+  type: "gain" | "cost" | "risk";
+  label: string;
+  value: string;
+}
+
+export interface RiskItem {
+  label: string;
+  severity: "low" | "medium" | "high";
+}
+
+export interface FuturePath {
+  id: string;
+  name: string;
+  emoji: string;
+  tagline: string;
+  description: string;
+  success_probability: number;
+  median_corpus: number;
+  p10_corpus: number;
+  p90_corpus: number;
+  required_monthly_sip: number;
+  monthly_sip: number;
+  sip_delta: number;
+  horizon_years: number;
+  horizon_delta: number;
+  equity_allocation: number;
+  debt_allocation: number;
+  has_major_purchase: boolean;
+  major_purchase_amount: number | null;
+  tradeoffs: TradeoffItem[];
+  recommended_actions: string[];
+  risks: RiskItem[];
+  largest_opportunity: string;
+}
+
+export interface FutureTreeResponse {
+  futures: FuturePath[];
+  base_sip: number;
+  base_horizon: number;
+  target_amount: number | null;
+  profile_age: number;
+  risk_profile: string;
+}
+
+export interface FutureTreeRequest {
+  goal_id?: string;
+  monthly_sip: number;
+  horizon_years: number;
+  target_amount?: number;
+}
+
+// ── Attribution ───────────────────────────────────────────────────────────────
+
+export interface AttributionFactor {
+  factor: string;
+  label: string;
+  impact: number;
+  impact_pct: number;
+  direction: "positive" | "negative";
+  description: string;
+  value: string;
+}
+
+export interface AttributionResult {
+  base_probability: number;
+  positive_factors: AttributionFactor[];
+  negative_factors: AttributionFactor[];
+  all_factors: AttributionFactor[];
+  sensitivity: number;
+  confidence: string;
+}
+
+export interface AttributionRequest {
+  goal_id?: string;
+  monthly_sip: number;
+  horizon_years: number;
+  target_amount?: number;
+}
+
+// ── Behavior ──────────────────────────────────────────────────────────────────
+
+export interface BehaviorScores {
+  savings_discipline: number;
+  debt_management: number;
+  emergency_fund: number;
+  investment_rate: number;
+  risk_alignment: number;
+  expense_control: number;
+  income_growth: number;
+}
+
+export interface BehaviorAlert {
+  severity: "high" | "medium" | "low";
+  dimension: string;
+  message: string;
+  action: string;
+}
+
+export interface BehaviorResult {
+  scores: BehaviorScores;
+  overall: number;
+  insights: string[];
+  alerts: BehaviorAlert[];
+}
+
+// ── DNA ───────────────────────────────────────────────────────────────────────
+
+export interface DNAScore {
+  savings: number;
+  risk: number;
+  liquidity: number;
+  debt: number;
+  investment: number;
+  insurance: number;
+  behavior: number;
+  overall: number;
+}
+
+export interface DNAResult {
+  dna: DNAScore;
+  behavior: BehaviorResult;
+  profile_id: string;
+}
+
+// ── Timeline ──────────────────────────────────────────────────────────────────
+
+export interface TimelineEvent {
+  year: number;
+  title: string;
+  description: string;
+  type: "milestone" | "goal" | "risk" | "achievement";
+  icon: string;
+  amount: number | null;
+  achieved: boolean;
+  probability: number | null;
+}
+
+export interface TimelineResult {
+  events: TimelineEvent[];
+  current_year: number;
+  total_events: number;
+}
+
+// ── Historical Scenarios ──────────────────────────────────────────────────────
+
+export interface HistoricalScenario {
+  id: string;
+  name: string;
+  emoji: string;
+  period: string;
+  description: string;
+}
+
+export interface HistoricalScenarioResult {
+  scenario_id: string;
+  scenario_name: string;
+  scenario_emoji: string;
+  period: string;
+  description: string;
+  base_probability: number;
+  stressed_probability: number;
+  probability_impact: number;
+  probability_impact_pct: number;
+  base_median_corpus: number;
+  stressed_median_corpus: number;
+  corpus_impact_pct: number;
+  shocks_applied: {
+    equity_shock_pct: number;
+    income_shock_pct: number;
+    inflation_shock_pct: number;
+  };
+}
+
+export interface HistoricalScenarioRequest {
+  scenario_id: string;
+  monthly_sip: number;
+  horizon_years: number;
+  target_amount?: number;
+}
+

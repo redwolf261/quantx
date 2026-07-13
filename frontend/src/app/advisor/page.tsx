@@ -16,7 +16,7 @@ const CONTEXT_OPTIONS = [
   { value: "goal_status" as ContextType, label: "🎯 Goal Status", desc: "Explain goal progress" },
 ];
 
-export default function AdvisorPage() {
+export default function IntelligencePage() {
   const { user } = useAuth();
   const { profile, goals, latestSimulation } = useStore();
   const [contextType, setContextType] = useState<ContextType>("simulation");
@@ -116,10 +116,8 @@ export default function AdvisorPage() {
             🤖
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">AI Financial Advisor</h1>
-            <p className="text-slate-400 text-sm">
-              Powered by analytics + AI explanation — not an LLM chatbot
-            </p>
+            <h1 className="text-xl font-black text-white">Financial Intelligence Engine</h1>
+            <p className="text-sm text-slate-500">AI-powered analysis of your financial data</p>
           </div>
         </motion.div>
 

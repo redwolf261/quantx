@@ -19,6 +19,16 @@ import type {
   ExplainResponse,
   DashboardData,
   CustomerSummary,
+  FutureTreeRequest,
+  FutureTreeResponse,
+  AttributionRequest,
+  AttributionResult,
+  BehaviorResult,
+  DNAResult,
+  TimelineResult,
+  HistoricalScenario,
+  HistoricalScenarioRequest,
+  HistoricalScenarioResult,
 } from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -117,6 +127,37 @@ export const dashboardApi = {
 
   getRmCustomers: (skip = 0, limit = 50) =>
     api.get<CustomerSummary[]>(`/dashboard/rm/customers?skip=${skip}&limit=${limit}`).then((r) => r.data),
+};
+
+// ── Financial Twin API ──────────────────────────────────────────────────────
+export const twinApi = {
+  /** Generate 4 Financial Twin future branches */
+  generateFutures: (data: FutureTreeRequest) =>
+    api.post<FutureTreeResponse>("/twin/futures", data).then((r) => r.data),
+
+  /** Compute WHY attribution for each financial factor */
+  computeAttribution: (data: AttributionRequest) =>
+    api.post<AttributionResult>("/twin/attribution", data).then((r) => r.data),
+
+  /** Get behavioral scores (7 dimensions) */
+  getBehavior: () =>
+    api.get<BehaviorResult>("/twin/behavior").then((r) => r.data),
+
+  /** Get Financial Health DNA (7-axis radar) */
+  getDNA: () =>
+    api.get<DNAResult>("/twin/dna").then((r) => r.data),
+
+  /** Get financial life timeline */
+  getTimeline: () =>
+    api.get<TimelineResult>("/twin/timeline").then((r) => r.data),
+
+  /** List available historical scenarios */
+  listScenarios: () =>
+    api.get<{ scenarios: HistoricalScenario[] }>("/twin/scenarios").then((r) => r.data),
+
+  /** Run a historical scenario (COVID, 2008, etc.) */
+  runHistorical: (data: HistoricalScenarioRequest) =>
+    api.post<HistoricalScenarioResult>("/twin/historical", data).then((r) => r.data),
 };
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
